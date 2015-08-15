@@ -1,6 +1,5 @@
 .tile {
-    height: 100px;
-	opacity: 0.6;
+	opacity: .8;
 	-webkit-transition: opacity 250ms ease;
 	-moz-transition: opacity 250ms ease;
 	-ms-transition: opacity 250ms ease;
@@ -8,8 +7,54 @@
 	transition: opacity 250ms ease;
 }
 
-.tile.lit {
+#blue.tile.lit {
 	opacity: 1;
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(0, 0, 255, 1);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 255, 1);
+}
+#green.tile.lit {
+	opacity: 1;
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(0, 255, 0, 1);
+    box-shadow: 0px 0px 5px 5px rgba(0, 255, 0, 1);
+}
+#red.tile.lit {
+	opacity: 1;
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(255, 0, 0, 1);
+    box-shadow: 0px 0px 5px 5px rgba(255, 0, 0, 1);
+}
+#yellow.tile.lit {
+	opacity: 1;
+    -webkit-box-shadow: 0px 0px 5px 5px rgba(255, 255, 0, 1);
+    box-shadow: 0px 0px 5px 5px rgba(255, 255, 0, 1);
 }
 
 
+#red, #blue, #yellow, #green {
+	height: 600px;
+    width: 600px;
+
+	border-radius: 300px 300px 300px 300px;
+	position: absolute;
+
+}
+
+#red:hover, #blue:hover, #yellow:hover, #green:hover {
+	border: 2px solid black
+}
+
+#red {
+    clip: rect(0px, 600px, 300px, 300px);
+	width: 600px;
+}
+#green {
+    clip: rect(300px,600px, 600px, 300px);
+	width: 600px;
+}
+#blue {
+    clip: rect(0px, 300px, 300px, 0px);
+	width: 600px;
+}
+#yellow {
+    clip: rect(300px, 300px, 600px, 0px);
+	width: 600px;
+}
