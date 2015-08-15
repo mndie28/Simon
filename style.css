@@ -1,0 +1,15 @@
+.tile {
+    height: 100px;
+	opacity: 0.6;
+	-webkit-transition: opacity 250ms ease;
+	-moz-transition: opacity 250ms ease;
+	-ms-transition: opacity 250ms ease;
+	-o-transition: opacity 250ms ease;
+	transition: opacity 250ms ease;
+}
+
+.tile.lit {
+	opacity: 1;
+}
+
+
