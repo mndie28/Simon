@@ -14,6 +14,10 @@ function playNote(note, octave, length) {
     sequence.play();
 }
 
+//UI
+livesDiv = document.getElementById("lives");
+simonCircle = document.getElementById("circle");
+
 //Pads
 blue = document.getElementById("blue");
 blue.onclick = padClicked;
@@ -26,7 +30,18 @@ yellow.onclick = padClicked;
 
 //Simon
 moves = [];
+simonHealth = 50;
 playerCurrentMove = 0;
+playerGoingReverse = false;
+playerLives = 3;
+
+function newGame() {
+    moves = [];
+    simonHealth = 50;
+    playerCurrentMove = 0;
+    playerLives = 3;
+    updateUI();
+}
 
 function newMove() {
     potentialMoves = ["blue", "red", "green", "yellow"];
@@ -74,7 +89,7 @@ function presentMoves() {
         }
         i++;
 
-    }, 600);
+    }, simonHealth*6);
 
 }
 
@@ -88,7 +103,16 @@ function clearPads() {
 function padClicked(event) {
     padClicked = event.target.id;
     clearPads();
-    if (moves[playerCurrentMove] == padClicked) {
+    
+    if (moves[playerCurrentMove] == padClicked || moves[moves.length - playerCurrentMove - 1] == padClicked) {
+        if (moves[moves.length - playerCurrentMove - 1] == padClicked)
+        {
+            playerGoingReverse = true;
+        }
+        else
+        {
+            playerGoingReverse = false;   
+        }
         switch (padClicked) {
             case "blue":
                 playNote('E', octave, 'q');
@@ -111,23 +135,47 @@ function padClicked(event) {
 
         if (playerCurrentMove >= moves.length) {
             setTimeout(function() {
+                if (playerGoingReverse)
+                {
+                    simonHealth -= moves.length;
+                    if (simonHealth <= 0)
+                    {
+                        alert("You win!");
+                        newGame();
+                    }
+                }
+                updateUI();
                 newMove();
                 presentMoves();
+
             }, 100);
         }
     } else {
         moves = [];
         playerCurrentMove = 0;
+        playerLives -= 1;
+        updateUI();
+        if (playerLives < 0)
+        {
+         alert("You Lose!");
+         newGame();
+        }
         playNote("F#", "1", 'q');
         setTimeout(function() {
             newMove();
             presentMoves();
+            
         }, 400);
     }
 
+}
 
+function updateUI(){
+    livesDiv.innerHTML = "Lives: " + playerLives;
+    simonCircle.innerHTML = simonHealth;
 }
 
 //simonIntroduction();
+updateUI();
 newMove();
 presentMoves();
