@@ -30,14 +30,14 @@ yellow.onclick = padClicked;
 
 //Simon
 moves = [];
-simonHealth = 50;
+simonHealth = 100;
 playerCurrentMove = 0;
 playerGoingReverse = false;
 playerLives = 3;
 
 function newGame() {
     moves = [];
-    simonHealth = 50;
+    simonHealth = 100;
     playerCurrentMove = 0;
     playerLives = 3;
     updateUI();
