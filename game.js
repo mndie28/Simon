@@ -37,6 +37,7 @@ presentMoves = function () {
         red.className = "tile";
         green.className = "tile";
         yellow.className = "tile";
+        
             switch (moves[i]) {
                 case 1:
                     playNote('E',octave,'q');
@@ -47,7 +48,7 @@ presentMoves = function () {
                     red.className = red.className + " lit";
                     break;
                 case 3:
-                    playNote('E',octave,'q');
+                    playNote('E',octave-1,'q');
                     green.className = green.className + " lit";
                     break;
                 case 4:
