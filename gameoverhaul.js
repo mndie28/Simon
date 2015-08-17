@@ -1,6 +1,7 @@
 var ac = new AudioContext();
 var tempo = 120;
 
+
 var simon = {
     health: 100,
 
@@ -23,6 +24,36 @@ var simon = {
         this.red.onclick = padClicked;
         this.green.onclick = padClicked;
         this.yellow.onclick = padClicked;
+    },
+    
+    intro: function(){
+        var sequence = new Sequence(ac, tempo, ['E4 q', 'A4 q', 'E3 q', 'C#4 q']);
+        sequence.loop = false;
+        sequence.play();
+        that = this;
+        this.lightPad(this.blue);
+        setTimeout(function(){ 
+            that.clearPads();
+            that.lightPad(that.red);
+            setTimeout(function(){
+                that.clearPads();
+                that.lightPad(that.green); 
+                setTimeout(function(){
+                    that.clearPads();
+                    that.lightPad(that.yellow); 
+                    setTimeout(function(){
+                        that.clearPads();
+                    },400);
+                },400);
+            },400);
+        },400);
+
+        
+
+        playNote('E', '3', 'w', .2);
+        playNote('A', '3', 'w', .2);
+        playNote('E', '2', 'w', .2);
+        playNote('C#', '3', 'w', .2); 
     },
 
     newMove: function()
@@ -49,19 +80,19 @@ var simon = {
             {
                 case "blue":
                     playNote('E', that.octave, 'q');
-                    that.blue.className = that.blue.className + " lit";
+                    that.lightPad(that.blue);
                     break;
                 case "red":
                     playNote('A', that.octave, 'q');
-                    red.className = red.className + " lit";
+                    that.lightPad(that.red);
                     break;
                 case "green":
                     playNote('E', that.octave - 1, 'q');
-                    that.green.className = that.green.className + " lit";
+                that.lightPad(that.green);
                     break;
                 case "yellow":
                     playNote('C#', that.octave, 'q');
-                    that.yellow.className = that.yellow.className + " lit";
+                    that.lightPad(that.yellow);
                     break;
             }
             i++;
@@ -75,6 +106,10 @@ var simon = {
         this.red.className = "tile";
         this.green.className = "tile";
         this.yellow.className = "tile";
+    },
+    
+    lightPad: function(pad){
+        pad.className = pad.className + " lit";
     }
 
 
@@ -107,19 +142,19 @@ function padClicked(event)
         {
             case "blue":
                 playNote('E', simon.octave, 'q');
-                simon.blue.className = simon.blue.className + " lit";
+                simon.lightPad(simon.blue);
                 break;
             case "red":
                 playNote('A', simon.octave, 'q');
-                simon.red.className = simon.red.className + " lit";
+                simon.lightPad(simon.red);                
                 break;
             case "green":
                 playNote('E', simon.octave - 1, 'q');
-                simon.green.className = simon.green.className + " lit";
+                simon.lightPad(simon.green);   
                 break;
             case "yellow":
                 playNote('C#', simon.octave, 'q');
-                simon.yellow.className = simon.yellow.className + " lit";
+                simon.lightPad(simon.yellow);   
                 break;
         }
         player.currentMove++;
@@ -141,7 +176,7 @@ function padClicked(event)
                 simon.newMove();
                 simon.presentMoves();
 
-            }, 100);
+            }, 200);
         }
     }
     else
@@ -183,9 +218,12 @@ function newGame()
     simon.presentMoves();
 }
 
-function playNote(note, octave, length)
+function playNote(note, octave, length, gain )
 {
+    if (gain === undefined)
+        gain = 1.0;
     var sequence = new Sequence(ac, tempo, [note + octave + " " + length]);
+    sequence.gain.gain.value = gain;
     sequence.loop = false;
     sequence.play();
 }
@@ -196,5 +234,8 @@ function updateUI()
     simon.centerCircle.innerHTML = simon.health;
 }
 
+simon.intro();
+setTimeout(function(){
 simon.init();
 newGame();
+},2200);
