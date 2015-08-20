@@ -8,6 +8,7 @@ var simon = {
     octave: 3,
     moves: [],
     health: 100,
+    isPresenting: false,
 
     timeouts: [],
 
@@ -25,35 +26,42 @@ var simon = {
         this.green.onclick = padClicked;
         this.yellow.onclick = padClicked;
     },
-    
-    intro: function(){
+
+    intro: function()
+    {
+        this.isPresenting = true;
         var sequence = new Sequence(ac, tempo, ['E4 q', 'A4 q', 'E3 q', 'C#4 q']);
         sequence.loop = false;
         sequence.play();
         that = this;
         this.lightPad(this.blue);
-        setTimeout(function(){ 
+        setTimeout(function()
+        {
             that.clearPads();
             that.lightPad(that.red);
-            setTimeout(function(){
+            setTimeout(function()
+            {
                 that.clearPads();
-                that.lightPad(that.green); 
-                setTimeout(function(){
+                that.lightPad(that.green);
+                setTimeout(function()
+                {
                     that.clearPads();
-                    that.lightPad(that.yellow); 
-                    setTimeout(function(){
+                    that.lightPad(that.yellow);
+                    setTimeout(function()
+                    {
                         that.clearPads();
-                    },400);
-                },400);
-            },400);
-        },400);
+                        that.isPresenting = false;
+                    }, 400);
+                }, 400);
+            }, 400);
+        }, 400);
 
-        
+
 
         playNote('E', '3', 'w', .2);
         playNote('A', '3', 'w', .2);
         playNote('E', '2', 'w', .2);
-        playNote('C#', '3', 'w', .2); 
+        playNote('C#', '3', 'w', .2);
     },
 
     newMove: function()
@@ -67,12 +75,14 @@ var simon = {
         player.currentMove = 0;
         var i = 0;
         var that = this;
+        this.isPresenting = true;
         var interval = setInterval(function()
         {
             if (i >= that.moves.length)
             {
                 clearInterval(interval);
                 that.clearPads()
+                that.isPresenting = false;
             }
             that.clearPads();
 
@@ -88,7 +98,7 @@ var simon = {
                     break;
                 case "green":
                     playNote('E', that.octave - 1, 'q');
-                that.lightPad(that.green);
+                    that.lightPad(that.green);
                     break;
                 case "yellow":
                     playNote('C#', that.octave, 'q');
@@ -107,8 +117,9 @@ var simon = {
         this.green.className = "tile";
         this.yellow.className = "tile";
     },
-    
-    lightPad: function(pad){
+
+    lightPad: function(pad)
+    {
         pad.className = pad.className + " lit";
     }
 
@@ -125,80 +136,83 @@ var player = {
 
 function padClicked(event)
 {
-    padClicked = event.target.id;
-    simon.clearPads();
-
-    if (simon.moves[player.currentMove] == padClicked || simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
+    if (simon.isPresenting == false)
     {
-        if (simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
-        {
-            player.goingReverse = true;
-        }
-        else
-        {
-            player.goingReverse = false;
-        }
-        switch (padClicked)
-        {
-            case "blue":
-                playNote('E', simon.octave, 'q');
-                simon.lightPad(simon.blue);
-                break;
-            case "red":
-                playNote('A', simon.octave, 'q');
-                simon.lightPad(simon.red);                
-                break;
-            case "green":
-                playNote('E', simon.octave - 1, 'q');
-                simon.lightPad(simon.green);   
-                break;
-            case "yellow":
-                playNote('C#', simon.octave, 'q');
-                simon.lightPad(simon.yellow);   
-                break;
-        }
-        player.currentMove++;
+        padClicked = event.target.id;
+        simon.clearPads();
 
-        if (player.currentMove >= simon.moves.length)
+        if (simon.moves[player.currentMove] == padClicked || simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
         {
-            setTimeout(function()
+            if (simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
             {
-                if (player.goingReverse)
+                player.goingReverse = true;
+            }
+            else
+            {
+                player.goingReverse = false;
+            }
+            switch (padClicked)
+            {
+                case "blue":
+                    playNote('E', simon.octave, 'q');
+                    simon.lightPad(simon.blue);
+                    break;
+                case "red":
+                    playNote('A', simon.octave, 'q');
+                    simon.lightPad(simon.red);
+                    break;
+                case "green":
+                    playNote('E', simon.octave - 1, 'q');
+                    simon.lightPad(simon.green);
+                    break;
+                case "yellow":
+                    playNote('C#', simon.octave, 'q');
+                    simon.lightPad(simon.yellow);
+                    break;
+            }
+            player.currentMove++;
+
+            if (player.currentMove >= simon.moves.length)
+            {
+                setTimeout(function()
                 {
-                    simon.health -= simon.moves.length;
-                    if (simon.health <= 0)
+                    if (player.goingReverse)
                     {
-                        alert("You win!");
-                        newGame();
+                        simon.health -= simon.moves.length;
+                        if (simon.health <= 0)
+                        {
+                            alert("You win!");
+                            newGame();
+                        }
                     }
-                }
-                updateUI();
-                simon.newMove();
-                simon.presentMoves();
+                    updateUI();
+                    simon.newMove();
+                    simon.presentMoves();
 
-            }, 200);
-        }
-    }
-    else
-    {
-        simon.moves = [];
-        player.currentMove = 0;
-        player.lives -= 1;
-        updateUI();
-        playNote("F#", "1", 'q');
-        if (player.lives < 0)
-        {
-            alert("You Lose!");
-            newGame();
+                }, 200);
+            }
         }
         else
         {
-            setTimeout(function()
+            simon.moves = [];
+            player.currentMove = 0;
+            player.lives -= 1;
+            updateUI();
+            playNote("F#", "1", 'q');
+            if (player.lives < 0)
             {
-                simon.newMove();
-                simon.presentMoves();
+                alert("You Lose!");
+                newGame();
+            }
+            else
+            {
+                setTimeout(function()
+                {
+                    simon.newMove();
+                    simon.presentMoves();
 
-            }, 400);
+                }, 400);
+            }
         }
     }
 
@@ -218,7 +232,7 @@ function newGame()
     simon.presentMoves();
 }
 
-function playNote(note, octave, length, gain )
+function playNote(note, octave, length, gain)
 {
     if (gain === undefined)
         gain = 1.0;
@@ -235,7 +249,8 @@ function updateUI()
 }
 
 simon.intro();
-setTimeout(function(){
-simon.init();
-newGame();
-},2200);
+setTimeout(function()
+{
+    simon.init();
+    newGame();
+}, 2200);
