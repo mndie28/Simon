@@ -140,10 +140,9 @@ function padClicked(event)
     {
         padClicked = event.target.id;
         simon.clearPads();
-
-        if (simon.moves[player.currentMove] == padClicked || simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
+        if (player.currentMove == 0)
         {
-            if (simon.moves[simon.moves.length - player.currentMove - 1] == padClicked)
+            if (simon.moves[simon.moves.length - 1] == padClicked)
             {
                 player.goingReverse = true;
             }
@@ -151,6 +150,10 @@ function padClicked(event)
             {
                 player.goingReverse = false;
             }
+        }
+        if ((simon.moves[player.currentMove] == padClicked && player.goingReverse == false) || (simon.moves[simon.moves.length - player.currentMove - 1] == padClicked && player.goingReverse == true))
+        {
+
             switch (padClicked)
             {
                 case "blue":
