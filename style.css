@@ -8,6 +8,15 @@ body {
 background-color: aqua;
 }
 
+.dialog {
+    border-style: solid;
+    border-width: 10px;
+    background-color: grey;
+    font-family:"Courier New", Courier, monospace;
+    height: 50px;
+    width: 50px;
+}
+
 #lives {
     color:white;
     font-size: 3em;
