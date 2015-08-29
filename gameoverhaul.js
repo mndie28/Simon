@@ -1,6 +1,6 @@
 var ac = new AudioContext();
 var tempo = 120;
-
+var soundOn = true;
 
 var simon = {
     health: 100,
@@ -30,9 +30,12 @@ var simon = {
     intro: function()
     {
         this.isPresenting = true;
-        var sequence = new Sequence(ac, tempo, ['E4 q', 'A4 q', 'E3 q', 'C#4 q']);
-        sequence.loop = false;
-        sequence.play();
+        if (soundOn == true)
+        {
+            var sequence = new Sequence(ac, tempo, ['E4 q', 'A4 q', 'E3 q', 'C#4 q']);
+            sequence.loop = false;
+            sequence.play();
+        }
         that = this;
         this.lightPad(this.blue);
         setTimeout(function()
@@ -237,12 +240,15 @@ function newGame()
 
 function playNote(note, octave, length, gain)
 {
+    if (soundOn == true)
+    {
     if (gain === undefined)
         gain = 1.0;
     var sequence = new Sequence(ac, tempo, [note + octave + " " + length]);
     sequence.gain.gain.value = gain;
     sequence.loop = false;
     sequence.play();
+    }
 }
 
 function updateUI()
@@ -300,5 +306,20 @@ function storyStateInit()
     document.getElementById("play").onclick = playStateInit;
 }
 
+function toggleSound()
+{
+ if (soundOn == true)
+ {
+  soundOn = false;
+  document.getElementById("sound").innerHTML = "Sound Off";
+ }
+ else
+ {
+  soundOn = true;
+  document.getElementById("sound").innerHTML = "Sound On";
+ }
+    
+    return false;
+}
 
 storyStateInit();

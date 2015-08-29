@@ -7,6 +7,7 @@ var redNote = new Note('A4 q');
 var greenNote = new Note('E3 q');
 var yellowNote = new Note('Cs4 q');
 var sequence = new Sequence(ac, tempo);
+var soundOn = true;
 
 function playNote(note, octave, length) {
     var sequence = new Sequence(ac, tempo, [note + octave + " " + length]);
