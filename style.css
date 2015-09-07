@@ -26,14 +26,17 @@ body {
 }
 
 .dialog {
-    border-style: solid;
-    border-width: 10px;
     background-color: grey;
     font-family:"Courier New", Courier, monospace;
-    height: 50px;
     width: 50px;
+    margin: 0 auto;
+    line-height: 25px;
 }
 
+#intro {
+ margin: 0 auto;   
+    width: 50%;
+}
 #lives {
     color:white;
     font-size: 3em;
