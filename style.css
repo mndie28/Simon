@@ -26,7 +26,7 @@ body {
 }
 
 .dialog {
-    background-color: grey;
+    background-color: #bdc3c7;
     font-family:"Courier New", Courier, monospace;
     width: 50px;
     margin: 0 auto;
@@ -102,18 +102,22 @@ body {
 }
 
 #red {
+    background-color:#e74c3c;
     clip: rect(0px, 600px, 300px, 300px);
 	width: 600px;
 }
 #green {
+    background-color: #2ecc71;
     clip: rect(300px,600px, 600px, 300px);
 	width: 600px;
 }
 #blue {
+    background-color: #3498db;
     clip: rect(0px, 300px, 300px, 0px);
 	width: 600px;
 }
 #yellow {
+    background-color: #f1c40f;
     clip: rect(300px, 300px, 600px, 0px);
 	width: 600px;
 }
