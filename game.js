@@ -267,7 +267,7 @@ function updateUI()
 }
 
 
-function storyDisplay2(i)
+function storyDisplay(i)
 {
     var story = "In 1978 a game was introduced involving four lights that would flash in a randomized pattern while the user tried memorizing the pattern.  Test";
 
@@ -289,7 +289,7 @@ function storyDisplay2(i)
         {
             playNote("C", "2", ".01", ".4");
         }
-        setTimeout(storyDisplay2, delay, i);
+        setTimeout(storyDisplay, delay, i);
     }
 }
 
@@ -311,7 +311,7 @@ function storyStateInit()
     document.getElementById("intro").style.display = "bock";
     document.getElementById("gameState").style.display = "none";
     document.getElementById("story").innerHTML = "";
-    storyDisplay2(0);
+    storyDisplay(0);
     document.getElementById("play").onclick = playStateInit;
 }
 
