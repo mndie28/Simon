@@ -269,7 +269,7 @@ function updateUI()
 
 function storyDisplay(i)
 {
-    var story = "In 1978 a game was introduced involving four lights that would flash in a randomized pattern while the user tried memorizing the pattern.  Test";
+    var story = "In 1978 a game was introduced involving four lights that would flash in a randomized pattern while the user tried memorizing the pattern.";
 
     document.getElementById("story").innerHTML += story.charAt(i);
     i++;
