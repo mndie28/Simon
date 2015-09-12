@@ -196,7 +196,7 @@ function padClicked(event)
                         simon.health -= simon.moves.length;
                         if (simon.health <= 0)
                         {
-                            alert("You win!");
+                            winStateInit()
                             newGame();
                         }
                     }
@@ -216,8 +216,7 @@ function padClicked(event)
             playNote("F#", "1", 'q');
             if (player.lives < 0)
             {
-                alert("You Lose!");
-                newGame();
+                failStateInit();
             }
             else
             {
@@ -235,10 +234,11 @@ function padClicked(event)
 
 function newGame()
 {
+    player.lives = 3;
     simon.moves = [];
     simon.health = 100;
     player.currentMove = 0;
-    player.lives = 3;
+    
 
     updateUI();
 
@@ -298,6 +298,8 @@ function playStateInit()
 {
     document.getElementById("gameState").style.display = "block";
     document.getElementById("intro").style.display = "none";
+    document.getElementById("fail").style.display = "none";
+    document.getElementById("win").style.display = "none"; 
     simon.intro();
     setTimeout(function()
     {
@@ -312,7 +314,23 @@ function storyStateInit()
     document.getElementById("gameState").style.display = "none";
     document.getElementById("story").innerHTML = "";
     storyDisplay(0);
-    document.getElementById("play").onclick = playStateInit;
+    
+}
+
+function failStateInit()
+{
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("gameState").style.display = "none";
+    document.getElementById("fail").style.display = "block";
+    document.getElementById("win").style.display = "none"; 
+}
+
+function winStateInit()
+{
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("gameState").style.display = "none";
+    document.getElementById("fail").style.display = "none";
+    document.getElementById("win").style.display = "block"; 
 }
 
 function toggleSound()

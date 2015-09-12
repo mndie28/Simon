@@ -21,7 +21,7 @@ body {
     line-height: 25px;
 }
 
-#intro {
+#intro ,#fail,#win{
  margin: 0 auto;   
   width: 50%;
 }
